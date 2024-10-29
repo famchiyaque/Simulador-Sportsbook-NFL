@@ -21,10 +21,22 @@ Qué es un domingo viendo la NFL sin una apuesta?! Este proyecto require de un a
     para determinar si fueron éxitosos o no.
 6. Regresa un balance final después de las apuestas al usuario.
 
+## Cómo Usar
+Corre el programa y sigue las instrucciones. Primero ingresas una cantidad de dinero para que
+tengas un balance. Luego hay 2 tipos de apuestas: las normales, donde eliges un jugador/apuesta
+de la oferta dada, y el parlay. El parlay es cuando igual eliges apuestas, pero las juntas en
+una sola apuesta, donde todas tienen que pasar para que ganes. La ventaje es que el premio de
+un parlay crece exponencialmente con su tamaño. 
+Puedes seguir agregando apuestas y crear un solo parlay que tampoco tiene limite de apuestas, 
+hasta que ya no quedes un balance o que elijas salir del sportsbook y seguir a ver los 
+resultados.
+Según los resultados, las ganancias de cada apuesta y el parlay si lo hiciste se agregarán a tu
+balance. 
+
 ## Instrucciones para compilar el avance de proyecto
 Ejecuta el siguiente comando en la terminal:
 
-`g++ main.cpp` 
+`g++ -std=c++11 main.cpp` 
 
 ## Instrucciones para ejecutar el avance de proyecto
 Ejecuta el siguiente comando en la terminal:

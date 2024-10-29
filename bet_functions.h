@@ -10,13 +10,13 @@
 #include <cmath>
 using namespace std;
 
-string trim(string str) {
+string trim(string str) { // O(n)
     str.erase(0, str.find_first_not_of(' '));  // Remove leading spaces
     str.erase(str.find_last_not_of(' ') + 1);  // Remove trailing spaces
     return str;
 }
 
-bool checkMoney(int money, int bet_amount) {
+bool checkMoney(int money, int bet_amount) { // O(1)
     if (money >= bet_amount) {
         return true;
     } else {
@@ -24,7 +24,7 @@ bool checkMoney(int money, int bet_amount) {
     }
 }
 
-char overUnder(string name, string bet_line, string over, string under) {
+char overUnder(string name, string bet_line, string over, string under) { // O(1)
     char betChoice;
     cout << "Ingresa 'o' para " << name << " over " << bet_line << " a " << over << " o 'u' para under " << bet_line << " a "  << under << endl;
     cin >> betChoice;
@@ -45,7 +45,7 @@ char overUnder(string name, string bet_line, string over, string under) {
     }
 }
 
-int getBetAmount(int money) {
+int getBetAmount(int money) { // O(1)
     int betAmount;
     cout << "Cuanto quieres apostar? Tienes balance de: $" << money << " o, ingresa '-1' para salir" << endl;
     cin >> betAmount;
@@ -58,7 +58,7 @@ int getBetAmount(int money) {
     }
 }
 
-float getPayout(string odd, int bet) {
+float getPayout(string odd, int bet) { // O(1)
     odd = trim(odd);
     string oddString = "";
     float oddNum;
@@ -78,7 +78,7 @@ float getPayout(string odd, int bet) {
     }
 }
 
-float getLimit(string line) {
+float getLimit(string line) { // O(n) n = longitud de la apuesta
     string wholeNum = "";
     for (int i = 0; i < line.length(); i++) {
         if (line[i] != ' ') {
@@ -116,7 +116,7 @@ class Bet {
     friend class ParLinkBet;
 };
 
-Bet::Bet() {
+Bet::Bet() { // O(1)
     player_name = "";
     player_line = "";
     type_bet = "";
@@ -127,15 +127,15 @@ Bet::Bet() {
     index = 0;
 }
 
-Bet::Bet(string line, int money, int index) {
+Bet::Bet(string line, int money, int index) { 
     makeBet(line, money, index);
 }
 
-int Bet::minusBetFromBalance() {
+int Bet::minusBetFromBalance() { // O(1)
     return bet_amount;
 }
 
-void Bet::makeBet(string line, int money, int index) {
+void Bet::makeBet(string line, int money, int index) { // O(n) n = longitud de apuesta
     string curr = "";
     string name = "";
     string bet_line = "";
@@ -143,7 +143,7 @@ void Bet::makeBet(string line, int money, int index) {
     string under = "";
     string new_id = "";
     int readIndex = 1;
-    for (int i = 0; i < line.length(); i++) {
+    for (int i = 0; i < line.length(); i++) { // O(n) n = longitud de apuesta
         if (line[i] == '|' || i == line.length() - 1) {
             if (readIndex == 1) {
                 name = trim(curr);
@@ -166,27 +166,27 @@ void Bet::makeBet(string line, int money, int index) {
     // char betChoice;
     // cout << "Quieres tomar el over (ingresa 'o'): " << over << " o el under (ingresa 'u'): " << under << " para " << name << endl;
     // cin >> betChoice;
-    char betChoice = overUnder(name, bet_line, over, under);
+    char betChoice = overUnder(name, bet_line, over, under); // O(1)
     while (!(betChoice == 'o' || betChoice == 'u')) {
         if (betChoice == 'f') return;
-        betChoice = overUnder(name, bet_line, over, under);
+        betChoice = overUnder(name, bet_line, over, under); // O(1)
     }
 
-    int betAmount = getBetAmount(money);
+    int betAmount = getBetAmount(money); // O(1)
     while (betAmount <= 0 || betAmount > money) {
         if (betAmount == -1) return;
         cout << "Monto invalido, intenta otra vez" << endl;
-        betAmount = getBetAmount(money);
+        betAmount = getBetAmount(money); // O(1)
     }
 
     cout << "Creando apuesta... " << endl;
     cout << endl;
     int new_payout;
     if (betChoice == 'o') {
-        new_payout = getPayout(over, betAmount);
+        new_payout = getPayout(over, betAmount); // O(1)
         cout << "Tu apuesta de " << name << " para mas que " << bet_line << " con monto de $" << betAmount << " y odds de " << over << " tiene payout de $" << new_payout << endl;
     } else if (betChoice == 'u') {
-        new_payout = getPayout(under, betAmount);
+        new_payout = getPayout(under, betAmount); // O(1)
         cout << "Tu apuesta de " << name << " para menos que " << bet_line << " con monto de $" << betAmount << " y odds de " << over << " tiene payout de $" << new_payout << endl;
     }
     cout << endl;
@@ -201,13 +201,13 @@ void Bet::makeBet(string line, int money, int index) {
         this->type_bet = under;
         this->type = "under";
     }
-    this->limit = getLimit(bet_line);
+    this->limit = getLimit(bet_line); // O(1)
     this->bet_amount = betAmount;
     this->payout = new_payout;
     this->index = index;
 }
 
-string Bet::printBet() {
+string Bet::printBet() { // O(1)
     string stringBet;
     stringBet += this->player_name + " para ";
     stringBet += this->player_line + " a ";
@@ -218,7 +218,7 @@ string Bet::printBet() {
     // cout << this.player_name << " para " << this.player_line << " a " << this.type_bet << " con apuesta de " << this.bet_amount << " y payout de: " << this.payout << endl;
 }
 
-int resolveBet(Bet bet, const vector<int>& bet_results) {
+int resolveBet(Bet bet, const vector<int>& bet_results) { // O(1)
     int betIndex = bet.index;
     int result = bet_results[betIndex];
     if ((result > bet.limit && bet.type == "over") || (result < bet.limit && bet.type == "under")) {
@@ -239,7 +239,7 @@ class ParLinkBet {
         ParLinkBet();
 };
 
-ParLinkBet::ParLinkBet() {
+ParLinkBet::ParLinkBet() { // O(1)
     next = NULL;
     betptr = NULL;
 }
@@ -262,23 +262,23 @@ class Parlay {
         ~Parlay();
 };
 
-Parlay::Parlay() {
+Parlay::Parlay() { // O(1)
     head = NULL;
     size = 0;
     payout = 0;
 }
 
-Parlay::~Parlay() {
+Parlay::~Parlay() { // O(1)
     size = 0;
     head = NULL;
     payout = 0;
 }
 
-int Parlay::sizeParlay() {
+int Parlay::sizeParlay() { // O(1)
     return size;
 }
 
-int Parlay::undoBet() {
+int Parlay::undoBet() { // O(1)
     ParLinkBet * victim = head;
     totalBetWager -= head->betptr->payout;
     int moneyBack = head->betptr->bet_amount;
@@ -293,7 +293,7 @@ int Parlay::undoBet() {
     return moneyBack;
 }
 
-int Parlay::addBet(string line, int money, int index) {
+int Parlay::addBet(string line, int money, int index) { // O(1)
     ParLinkBet * new_parlay_bet = new ParLinkBet;
     Bet * new_bet = new Bet(line, money, index);
     new_parlay_bet->betptr = new_bet;
@@ -309,7 +309,7 @@ int Parlay::addBet(string line, int money, int index) {
     return new_bet->bet_amount;
 }
 
-float Parlay::gradeParlay(const vector<int>& bet_results) {
+float Parlay::gradeParlay(const vector<int>& bet_results) { // O(n)
     cout << "Resultados de tu Parlay: " << endl;
     ParLinkBet * currPBet = head;
     int counter = 1;
@@ -337,7 +337,7 @@ float Parlay::gradeParlay(const vector<int>& bet_results) {
     return payout;
 }
 
-void Parlay::readParlay() {
+void Parlay::readParlay() { // O(n)
     cout << "Tu parlay hasta ahora: " << endl;
     ParLinkBet * currPBet = head;
     // Bet currBet = currPBet->betptr;

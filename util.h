@@ -11,7 +11,7 @@ using namespace std;
 
 void welcomeMessage() {
     cout << "-------------Bienvenidos al Betting-Booth!---------------" << endl;
-    cout << "Aqui puedes hacer apostar con las lineas que tenemos de los jugadores de la NFL, " << endl;
+    cout << "Aqui puedes hacer apuestas con las lineas que tenemos de los jugadores de la NFL, " << endl;
     cout << "o si te sientes muy confiado, puedes crear un parlay de varios apuestas, donde " << endl;
     cout << "el payout se multiplica por 1.1^(n-1), n siendo la cantidad de apuestas en tu parlay" << endl;
     cout << "Buena suerte! " << endl;
